@@ -1,9 +1,19 @@
-import React from 'react'
-
-const provider = () => {
+"use client";
+import React from "react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+const provider = ({ children }) => {
   return (
-    <div>provider</div>
-  )
-}
+    <div>
+      <NextThemesProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        {children}
+      </NextThemesProvider>
+    </div>
+  );
+};
 
-export default provider
+export default provider;
