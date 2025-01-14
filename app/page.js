@@ -1,7 +1,8 @@
+import Hero from "@/components/custom/Hero";
 export default function Home() {
   return (
     <div>
-      <h1>Home badass</h1>
+      <Hero />
     </div>
   );
 }
