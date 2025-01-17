@@ -3,16 +3,24 @@ import React, { useContext, useState } from "react";
 import Lookup from "@/data/Lookup";
 import { ArrowRight, Link } from "lucide-react";
 import { MessagesContext } from "@/context/MessagesContext";
+import { UserDetailContext } from "@/context/UserDetailContext";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import LoginDialog from "@/components/custom/LoginDialog";
 
 const Hero = () => {
   const [userInput, setUserInput] = useState();
   const { Messages, setMessages } = useContext(MessagesContext);
+  const { UserDetail, setUserDetail } = useContext(UserDetailContext);
+  const [OpenDialog, setOpenDialog] = useState(false);
   const onGenerate = (input) => {
+    if (!UserDetail?.name) {
+      setOpenDialog(true);
+      return;
+    }
     setMessages({
-      role: 'user',
-      content: input
-    })
+      role: "user",
+      content: input,
+    });
   };
   return (
     <div className="flex flex-col items-center mt-32 xl:mt-[120px] gap-2">
@@ -28,7 +36,10 @@ const Hero = () => {
             placeholder={Lookup.INPUT_PLACEHOLDER}
           />
           {userInput && (
-            <ArrowRight onClick={()=>onGenerate(userInput)} className="bg-blue-500 p-2 h-10 w-10 rounded-md cursor-pointer" />
+            <ArrowRight
+              onClick={() => onGenerate(userInput)}
+              className="bg-blue-500 p-2 h-10 w-10 rounded-md cursor-pointer"
+            />
           )}
         </div>
         <div>
@@ -48,6 +59,7 @@ const Hero = () => {
           </HoverBorderGradient>
         ))}
       </div>
+      <LoginDialog OpenDialog={OpenDialog} CloseDialog={(v)=>setOpenDialog(v)}/>
     </div>
   );
 };
