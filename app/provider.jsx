@@ -9,6 +9,7 @@ const provider = ({ children }) => {
   const [ UserDetail, setUserDetail ]  = useState();
   return (
     <div>
+      <GoogleOAuthProvider clientId="<your_client_id>"></GoogleOAuthProvider>
       <UserDetailContext.Provider value={{UserDetail, setUserDetail}}>
       <MessagesContext.Provider value={{Messages, setMessages}}>
       <NextThemesProvider

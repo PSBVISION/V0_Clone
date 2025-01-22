@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const LoginDialog = ({ OpenDialog, CloseDialog }) => {
   return (
@@ -14,9 +15,12 @@ const LoginDialog = ({ OpenDialog, CloseDialog }) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle></DialogTitle>
-          <DialogDescription className="flex flex-col items-center justify-center">
-            <div>
-              <h2 className="font-bold text-2xl text-white">{Lookup.SIGNIN_HEADING}</h2>
+          <DialogDescription>
+            <div className="flex flex-col items-center justify-center gap-3">
+              <h2 className="font-bold text-2xl text-center text-white">{Lookup.SIGNIN_HEADING}</h2>
+              <p className="mt-2 text-center">{Lookup.SIGNIN_SUBHEADING}</p>
+              <Button className="bg-blue-500 text-white hover:bg-blue-400 mt-3">Sign In with Google</Button>
+              <p>{Lookup?.SIGNIn_AGREEMENT_TEXT}</p>
             </div>
           </DialogDescription>
         </DialogHeader>
