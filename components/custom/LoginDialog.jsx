@@ -25,7 +25,8 @@ const LoginDialog = ({ OpenDialog, CloseDialog }) => {
 
       console.log(userInfo);
       setUserDetail(userInfo?.data);
-      closeDialog(false);
+      //save to database
+      CloseDialog(false);
     },
     onError: (errorResponse) => console.log(errorResponse),
   });
