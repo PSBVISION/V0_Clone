@@ -9,15 +9,15 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useGoogleLogin } from "@react-oauth/google"; 
+import { useGoogleLogin } from "@react-oauth/google";
 import axios from "axios";
 import { UserDetailContext } from "@/context/UserDetailContext";
 import { useMutation } from "convex/react";
-import {api} from "@/convex/_generated/api";
+import { api } from "@/convex/_generated/api";
 import uuid4 from "uuid4";
 
 const LoginDialog = ({ OpenDialog, CloseDialog }) => {
-  const {UserDetail, setUserDetail} = useContext(UserDetailContext);
+  const { UserDetail, setUserDetail } = useContext(UserDetailContext);
   const CreateUser = useMutation(api.users.CreateUser);
   const googleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -30,13 +30,13 @@ const LoginDialog = ({ OpenDialog, CloseDialog }) => {
       console.log(userInfo);
       const user = userInfo.data;
       await CreateUser({
-        name:user?.name,
-        email:user?.email,
-        picture:user?.picture,
-        uid:uuid4()
-      })
-      if(typeof window !== "undefined"){
-        localStorage.setItem('user',JSON.stringify(user))
+        name: user?.name,
+        email: user?.email,
+        picture: user?.picture,
+        uid: uuid4(),
+      });
+      if (typeof window !== "undefined") {
+        localStorage.setItem("user", JSON.stringify(user));
       }
       setUserDetail(userInfo?.data);
       //save to database
@@ -48,14 +48,18 @@ const LoginDialog = ({ OpenDialog, CloseDialog }) => {
     <Dialog open={OpenDialog} onOpenChange={CloseDialog}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle></DialogTitle>
+          <DialogTitle>
+            <h3 className="font-bold text-2xl text-center text-white">
+              {Lookup.SIGNIN_HEADING}
+            </h3>
+          </DialogTitle>
           <DialogDescription>
             <div className="flex flex-col items-center justify-center gap-3">
-              <h2 className="font-bold text-2xl text-center text-white">
-                {Lookup.SIGNIN_HEADING}
-              </h2>
               <p className="mt-2 text-center">{Lookup.SIGNIN_SUBHEADING}</p>
-              <Button onClick={googleLogin} className="bg-blue-500 text-white hover:bg-blue-400 mt-3">
+              <Button
+                onClick={googleLogin}
+                className="bg-blue-500 text-white hover:bg-blue-400 mt-3"
+              >
                 Sign In with Google
               </Button>
               <p>{Lookup?.SIGNIn_AGREEMENT_TEXT}</p>

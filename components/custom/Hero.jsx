@@ -6,21 +6,33 @@ import { MessagesContext } from "@/context/MessagesContext";
 import { UserDetailContext } from "@/context/UserDetailContext";
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 import LoginDialog from "@/components/custom/LoginDialog";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
+import { useRouter } from "next/navigation";
 
 const Hero = () => {
   const [userInput, setUserInput] = useState();
   const { Messages, setMessages } = useContext(MessagesContext);
   const { UserDetail, setUserDetail } = useContext(UserDetailContext);
   const [OpenDialog, setOpenDialog] = useState(false);
-  const onGenerate = (input) => {
+  const CreateWorkspace = useMutation(api.workspace.CreateWorkspace);
+  const router = useRouter()
+  const onGenerate = async (input) => {
     if (!UserDetail?.name) {
       setOpenDialog(true);
       return;
     }
-    setMessages({
+    const msg ={
       role: "user",
-      content: input,
+      content: input
+    }
+    setMessages(msg);
+    const workspaceID = await CreateWorkspace({
+      user: UserDetail._id,
+      messages: [msg],
     });
+    console.log(workspaceID);
+    router.push(`/workspace/${workspaceID}`);
   };
   return (
     <div className="flex flex-col items-center mt-32 xl:mt-[120px] gap-2">
@@ -59,7 +71,10 @@ const Hero = () => {
           </HoverBorderGradient>
         ))}
       </div>
-      <LoginDialog OpenDialog={OpenDialog} CloseDialog={(v)=>setOpenDialog(v)}/>
+      <LoginDialog
+        OpenDialog={OpenDialog}
+        CloseDialog={(v) => setOpenDialog(v)}
+      />
     </div>
   );
 };
