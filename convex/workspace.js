@@ -2,8 +2,8 @@ import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 export const CreateWorkspace = mutation({
-  arg: {
-    message: v.any(),
+  args: {
+    messages: v.any(),
     user: v.id("users"),
   },
   handler: async (ctx, args) => {
