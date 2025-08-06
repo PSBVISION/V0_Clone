@@ -27,7 +27,7 @@ function ChatView() {
   };
   return (
     <div className="relative h-[85vh] flex flex-col">
-      <div className="flex-1 overflow-y-scroll">
+      <div className="flex-1 overflow-y-scroll px-4">
         {Messages?.map((msg, index) => (
           <div key={index} className="bg-[#272727] p-3 rounded-lg mb-2 flex gap-2 items-start">
             {msg?.role=='user'&&<Image src={UserDetail?.picture} width={35} height={35} alt="userImage" className="rounded-full"/>}
